@@ -309,7 +309,7 @@ class LLMClient:
         system_prompt: Optional[str] = None,
         images: Optional[List[Union[str, Path, bytes]]] = None,
         **kwargs,
-    ) -> str:
+    ) -> ChatCompletion:
         """
         简单聊天接口
 
