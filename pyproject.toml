@@ -1,0 +1,10 @@
+[project]
+name = "llm-client"
+version = "0.1.0"
+description = "A simple and clear client for OpenAI-compatible APIs"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.11.7",
+]
