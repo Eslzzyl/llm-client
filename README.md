@@ -221,18 +221,7 @@ client = LLMClient(
 )
 ```
 
-## 运行示例
-
-```bash
-# 设置环境变量后运行示例
-python main.py
-```
-
 ## 依赖
 
 - [httpx](https://www.python-httpx.org/) - 现代HTTP客户端
 - [pydantic](https://pydantic-docs.helpmanual.io/) - 数据验证和类型提示
-
-## 许可证
-
-MIT License
