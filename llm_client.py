@@ -226,6 +226,7 @@ class LLMClient:
         temperature: float = 0.7,
         max_tokens: Optional[int] = None,
         stream: bool = False,
+        response_format: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> Union[ChatCompletion, Iterator[StreamChunk]]:
         """
@@ -238,6 +239,7 @@ class LLMClient:
             temperature: 温度参数，控制回复的随机性
             max_tokens: 最大token数量
             stream: 是否使用流式响应
+            response_format: 可选的响应格式字典，会原样序列化到请求中
             **kwargs: 其他API参数
 
         Returns:
@@ -262,6 +264,9 @@ class LLMClient:
             "stream": stream,
             **kwargs,
         }
+
+        if response_format is not None:
+            data["response_format"] = response_format
 
         if max_tokens is not None:
             data["max_tokens"] = max_tokens
@@ -308,6 +313,7 @@ class LLMClient:
         text: str,
         system_prompt: Optional[str] = None,
         images: Optional[List[Union[str, Path, bytes]]] = None,
+        response_format: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> ChatCompletion:
         """
@@ -317,6 +323,7 @@ class LLMClient:
             text: 用户输入的文本
             system_prompt: 可选的系统提示
             images: 可选的图片列表（路径、Path对象或bytes）
+            response_format: 可选的响应格式字典，会原样序列化到请求中
             **kwargs: 其他聊天参数
 
         Returns:
@@ -327,13 +334,19 @@ class LLMClient:
         else:
             message = Message.user_text(text)
 
-        return self.chat([message], system_prompt=system_prompt, **kwargs)
+        return self.chat(
+            [message],
+            system_prompt=system_prompt,
+            response_format=response_format,
+            **kwargs,
+        )
 
     def simple_chat_stream(
         self,
         text: str,
         system_prompt: Optional[str] = None,
         images: Optional[List[Union[str, Path, bytes]]] = None,
+        response_format: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> Iterator[StreamChunk]:
         """
@@ -343,6 +356,7 @@ class LLMClient:
             text: 用户输入的文本
             system_prompt: 可选的系统提示
             images: 可选的图片列表（路径、Path对象或bytes）
+            response_format: 可选的响应格式字典，会原样序列化到请求中
             **kwargs: 其他聊天参数
 
         Returns:
@@ -353,4 +367,10 @@ class LLMClient:
         else:
             message = Message.user_text(text)
 
-        return self.chat([message], system_prompt=system_prompt, stream=True, **kwargs)
+        return self.chat(
+            [message],
+            system_prompt=system_prompt,
+            stream=True,
+            response_format=response_format,
+            **kwargs,
+        )
