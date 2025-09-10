@@ -339,6 +339,8 @@ class LLMClient:
         text: str,
         system_prompt: Optional[str] = None,
         images: Optional[List[Union[str, Path, bytes]]] = None,
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
         response_format: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> ChatCompletion:
@@ -364,6 +366,8 @@ class LLMClient:
             [message],
             system_prompt=system_prompt,
             response_format=response_format,
+            temperature=temperature,
+            max_tokens=max_tokens,
             **kwargs,
         )
 
@@ -372,6 +376,8 @@ class LLMClient:
         text: str,
         system_prompt: Optional[str] = None,
         images: Optional[List[Union[str, Path, bytes]]] = None,
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
         response_format: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> Iterator[StreamChunk]:
@@ -398,5 +404,7 @@ class LLMClient:
             system_prompt=system_prompt,
             stream=True,
             response_format=response_format,
+            temperature=temperature,
+            max_tokens=max_tokens,
             **kwargs,
         )
