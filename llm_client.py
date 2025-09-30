@@ -81,7 +81,7 @@ class TextContent(BaseModel):
 class Message(BaseModel):
     """消息模型"""
 
-    role: str  # "user", "assistant", "system"
+    role: str  # "user", "assistant", "system", "tool"
     content: Union[str, List[Union[TextContent, ImageContent]]]
 
     @classmethod
@@ -116,6 +116,11 @@ class Message(BaseModel):
     def system(cls, text: str) -> "Message":
         """创建系统消息"""
         return cls(role="system", content=text)
+
+    @classmethod
+    def tool(cls, text: str) -> "Message":
+        """创建工具消息"""
+        return cls(role="tool", content=text)
 
 
 class Usage(BaseModel):
